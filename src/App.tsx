@@ -9,7 +9,7 @@ function App() {
       <nav>
         <ul>
           <li><Link to="/home">Home</Link></li>
-          <li><Link to="/articles">Articles</Link></li>
+          <li><Link to="/sports">Sports</Link></li>
         </ul>
       </nav>
       <Routes />
