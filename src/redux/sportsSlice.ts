@@ -54,7 +54,6 @@ export const sportsSlice = createSlice({
 			// 
 		})
 		builder.addCase(fetchAll.fulfilled, (state: any, action) => {
-			state
 			state.data = action.payload;
 			state.loading = false;
 		})
