@@ -5,10 +5,8 @@ import { Link } from 'react-router-dom'
 
 import { fetchAll } from '../../redux/sportsSlice'
 import SportCard from '../../components/Sports/SportCard'
-import envConfig from '../../config/environments'
 
 export default function Sports() {
-	console.log(envConfig.apiKey)
 	const dispatch = useDispatch()
 	const sportData = useSelector((state: any) => state.sports.data)
 	let content: any
@@ -32,12 +30,12 @@ export default function Sports() {
 	return(
 		<div>
 			<Breadcrumb>
-				<Breadcrumb.Item><Link to={"/home"}>Home</Link></Breadcrumb.Item>
+				<Breadcrumb.Item linkAs={Link} linkProps={{ to: '/' }}>
+					Home
+				</Breadcrumb.Item>
 				<Breadcrumb.Item active>Sports</Breadcrumb.Item>
 			</Breadcrumb>
-			<ListGroup>
-				{content}
-			</ListGroup>
+			{content}
 		</div>
 	)
 }

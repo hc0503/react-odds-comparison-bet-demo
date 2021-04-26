@@ -1,5 +1,7 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+
+import envConfig from '../config/environments'
 
 interface sportAction {
 	key: string,
@@ -17,8 +19,6 @@ const initialState: sportDataAction = {
 	data: [],
 	loading: false
 }
-const apiUrl: string = process.env.API_URL ?? 'https://api.the-odds-api.com/v3'
-const apiKey: string = process.env.API_KEY ?? '96fa5083348843096f2965e94a96fc15'
 
 export const fetchAll = createAsyncThunk(
 	'sports/fetchAllStatus',
@@ -27,7 +27,7 @@ export const fetchAll = createAsyncThunk(
 		signal.addEventListener('abort', () => {
 			source.cancel()
 		})
-		const res = await axios.get(`${apiUrl}/sports/?apiKey=${apiKey}`, {
+		const res = await axios.get(`${envConfig.apiURL}/sports/?apiKey=${envConfig.apiKey}`, {
 			cancelToken: source.token
 		})
 		

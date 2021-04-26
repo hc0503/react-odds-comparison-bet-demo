@@ -1,10 +1,11 @@
-import { BrowserRouter as Router, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Link, Switch, Route } from 'react-router-dom'
 import { Navbar, Nav, NavDropdown, } from 'react-bootstrap'
 
 import './App.css';
-import Routes from '../../routes'
+import { routes } from '../../routes'
 
 function App() {
+  console.log(routes[0].component)
   return (
     <Router>
       <Navbar
@@ -31,7 +32,18 @@ function App() {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
-      <Routes />
+      <Switch>
+        {routes.map((route, key) => {
+          return (
+            <Route
+              exact={route.exact}
+              path={route.path}
+              component={route.component}
+              key={key}
+              />
+          )
+        })}
+      </Switch>
     </Router>
   );
 }
