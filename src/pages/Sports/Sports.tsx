@@ -1,4 +1,4 @@
-import { ListGroup, Breadcrumb } from 'react-bootstrap'
+import { ListGroup, Breadcrumb, Container } from 'react-bootstrap'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
@@ -16,14 +16,12 @@ export default function Sports() {
 
 	if (sportData.length !== 0) {
 		content = sportData.data.map((sport: any) => (
-			// <SportCard key={sport.key}/>
-			<ListGroup.Item action variant="light" key={sport.key}>
-				key: {sport.key}
-				active: {sport.active}
-				group: {sport.group}
-				details: {sport.details}
-				title: {sport.title}
-			</ListGroup.Item>
+			<SportCard
+				title={sport.title}
+				group={sport.group}
+				details={sport.details}
+				key={sport.key}
+				/>
 		))
 	}
 
@@ -35,7 +33,9 @@ export default function Sports() {
 				</Breadcrumb.Item>
 				<Breadcrumb.Item active>Sports</Breadcrumb.Item>
 			</Breadcrumb>
-			{content}
+			<Container>
+				{content}
+			</Container>
 		</div>
 	)
 }

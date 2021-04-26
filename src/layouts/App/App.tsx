@@ -1,8 +1,9 @@
 import { BrowserRouter as Router, Link, Switch, Route } from 'react-router-dom'
-import { Navbar, Nav, NavDropdown, } from 'react-bootstrap'
+import { Navbar, Nav, NavDropdown } from 'react-bootstrap'
 
 import './App.css';
 import { routes } from '../../routes'
+import envConfig from '../../config/environments'
 
 function App() {
   console.log(routes[0].component)
@@ -15,7 +16,7 @@ function App() {
         variant="dark"
         sticky="top"
         >
-        <Navbar.Brand href="/">Comparison</Navbar.Brand>
+        <Navbar.Brand href="/">{envConfig.appName}</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">

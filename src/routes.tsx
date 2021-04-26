@@ -8,6 +8,11 @@ export const routes = [
 		component: Home,
 	},
 	{
+		path: '/home',
+		exact: true,
+		component: Home
+	},
+	{
 		path: '/sports',
 		exact: true,
 		component: Sports

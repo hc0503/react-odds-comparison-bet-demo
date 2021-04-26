@@ -1,14 +1,19 @@
 import { Card } from 'react-bootstrap'
 
-export default function SportCard() {
+interface sportData {
+	group: string,
+	details: string,
+	title: string
+}
+
+export default function SportCard(props: sportData) {
 	return(
-		<Card border="light" style={{ width: '18rem' }}>
-			<Card.Header>Header</Card.Header>
+		<Card className='mb-3'>
+			<Card.Header as="h5">{props.group}</Card.Header>
 			<Card.Body>
-				<Card.Title>Light Card Title</Card.Title>
+				<Card.Title>{props.title}</Card.Title>
 				<Card.Text>
-				Some quick example text to build on the card title and make up the bulk
-				of the card's content.
+					{props.details}
 				</Card.Text>
 			</Card.Body>
 		</Card>
