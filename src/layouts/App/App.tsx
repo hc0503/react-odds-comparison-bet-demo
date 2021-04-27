@@ -6,7 +6,6 @@ import { routes } from '../../routes'
 import envConfig from '../../config/environments'
 
 function App() {
-  console.log(routes[0].component)
   return (
     <Router>
       <Navbar

@@ -1,10 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
+import { useDispatch } from 'react-redux'
+
 import sportsSlice from './sportsSlice'
-import { useDispatch } from 'react-redux';
+import oddsSlice from './oddsSlice'
 
 const store = configureStore({
 	reducer: {
 	  sports: sportsSlice,
+	  odds: oddsSlice
 	},
 });
 

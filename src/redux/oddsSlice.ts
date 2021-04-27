@@ -3,19 +3,19 @@ import axios from 'axios'
 
 import envConfig from '../config/environments'
 
-const initialState: IsportDataAction = {
+const initialState: IoddDataAction = {
 	data: [],
 	loading: false
 }
 
 export const fetchAll = createAsyncThunk(
-	'sports/fetchAllStatus',
-	async (_: void, { signal }) => {
+	'odds/fetchAllStatus',
+	async (data: IoddParam, { signal }) => {
 		const source = axios.CancelToken.source()
 		signal.addEventListener('abort', () => {
 			source.cancel()
 		})
-		const res = await axios.get(`${envConfig.apiURL}/sports/?apiKey=${envConfig.apiKey}`, {
+		const res = await axios.get(`${envConfig.apiURL}/odds/?apiKey=${envConfig.apiKey}&sport=${data.sport_key}&region=${data.region}&mkt=${data.mkt}`, {
 			cancelToken: source.token
 		})
 		
@@ -23,8 +23,8 @@ export const fetchAll = createAsyncThunk(
 	}
  )
 
-export const sportsSlice = createSlice({
-	name: 'sports',
+export const oddsSlice = createSlice({
+	name: 'odds',
 	initialState,
 	reducers: {
 		increment: (state) => {
@@ -52,6 +52,6 @@ export const sportsSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { increment, decrement, incrementByAmount } = sportsSlice.actions
+export const { increment, decrement, incrementByAmount } = oddsSlice.actions
 
-export default sportsSlice.reducer
+export default oddsSlice.reducer

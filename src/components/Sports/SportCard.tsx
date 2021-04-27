@@ -1,17 +1,14 @@
 import { Card } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 
-interface sportData {
-	group: string,
-	details: string,
-	title: string
-}
-
-export default function SportCard(props: sportData) {
+export default function SportCard(props: IsportCard) {
 	return(
-		<Card className='mb-3'>
+		<Card className='mb-3' key={props.sport_key}>
 			<Card.Header as="h5">{props.group}</Card.Header>
 			<Card.Body>
-				<Card.Title>{props.title}</Card.Title>
+				<Card.Title>
+					<Link to={`/sports/${props.sport_key}/odds`} className='navbar-brand navbar-dark'>{props.title}</Link>
+				</Card.Title>
 				<Card.Text>
 					{props.details}
 				</Card.Text>

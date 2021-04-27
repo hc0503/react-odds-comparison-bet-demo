@@ -1,20 +1,26 @@
-import Home from './pages/Home/Home'
-import Sports from './pages/Sports/Sports'
+import HomePage from './pages/HomePage/HomePage'
+import SportsPage from './pages/SportsPage/SportsPage'
+import OddsPage from './pages/OddsPage/OddsPage'
 
 export const routes = [
 	{
 		path: '/',
 		exact: true,
-		component: Home,
+		component: HomePage,
 	},
 	{
 		path: '/home',
 		exact: true,
-		component: Home
+		component: HomePage
 	},
 	{
 		path: '/sports',
 		exact: true,
-		component: Sports
+		component: SportsPage,
+	},
+	{
+		path: '/sports/:key/odds',
+		exact: true,
+		component: OddsPage
 	}
 ]
