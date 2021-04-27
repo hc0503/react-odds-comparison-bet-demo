@@ -10,15 +10,17 @@ export default function Sports() {
 	const dispatch = useDispatch()
 	const sportData = useSelector((state: any) => state.sports.data)
 	let content: any
+
 	useEffect(() => {
 		dispatch(fetchAll())
 	}, [])
 
 	if (sportData.length !== 0) {
-		content = sportData.data.map((sport: any) => (
+		content = sportData.data.map((sport: IsportAction) => (
 			<SportCard
-				title={sport.title}
+				sport_key={sport.key}
 				group={sport.group}
+				title={sport.title}
 				details={sport.details}
 				key={sport.key}
 				/>
