@@ -1,3 +1,9 @@
+interface IoddSite {
+	site_key: string,
+	site_nice: string,
+	last_update: number,
+	odds: any
+}
 interface IoddAction {
 	id: string,
 	sport_key: string,
@@ -5,23 +11,11 @@ interface IoddAction {
 	teams: any,
 	commence_time: number,
 	home_team: string,
-	sites: {
-		site_key: string,
-		site_nice: string,
-		last_update: number,
-		odds: any
-	}
+	sites: IoddSite[]
 }
 interface IoddDataAction {
 	data: IoddAction[] | any,
 	loading: boolean
-}
-interface IoddCard {
-	id: string,
-	sport_nice: string,
-	teams: any,
-	commerce_time: number,
-	home_team: string
 }
 interface IoddParam {
 	sport_key: string,
