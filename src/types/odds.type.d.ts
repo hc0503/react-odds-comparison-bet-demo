@@ -11,7 +11,7 @@ interface IoddAction {
 	teams: any,
 	commence_time: number,
 	home_team: string,
-	sites: IoddSite[]
+	sites: IoddSite[] | any
 }
 interface IoddDataAction {
 	data: IoddAction[] | any,

@@ -1,5 +1,5 @@
+import React, { useEffect, useState } from 'react'
 import { ListGroup, Breadcrumb, Container } from 'react-bootstrap'
-import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
@@ -19,8 +19,12 @@ export default function Odds(props: any) {
 		region: region,
 		mkt: mkt
 	}
-	const [modalShow, setModalShow] = React.useState(false)
-	
+	const [modalShow, setModalShow] = useState(false)
+	const [modalData, setModalData] = useState({
+		teams: null,
+		sites: null
+	})
+
 	useEffect(() => {
 		dispatch(fetchAll(initParam))
 	}, [])
@@ -35,7 +39,13 @@ export default function Odds(props: any) {
 				home_team={odd.home_team}
 				commerce_time={odd.commence_time}
 				sites={odd.sites}
-				setModalShow={setModalShow}
+				setModalData={() => {
+					setModalData({
+						teams: odd.teams,
+						sites: odd.sites
+					})
+					setModalShow(true)
+				}}
 				/>
 		))
 	}
@@ -54,7 +64,8 @@ export default function Odds(props: any) {
 			</Container>
 			<OddModal
 				show={modalShow}
-				onHide={() => setModalShow(false)}
+				setModalShow={() => setModalShow(false)}
+				data={modalData}
 				/>
 		</div>
 	)
