@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { ListGroup, Breadcrumb, Container } from 'react-bootstrap'
-import { useDispatch, useSelector } from 'react-redux'
+import { Breadcrumb, Container, Spinner, Alert } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
-import { fetchAll } from '../../redux/oddsSlice'
+import { fetchAll } from '../../services/OddService'
 import OddCard from '../../components/Odds/OddCard'
 import OddModal from '../../components/Odds/OddModal'
 
 export default function Odds(props: any) {
-	const dispatch = useDispatch()
-	const oddData = useSelector((state: any) => state.odds.data)
-	let content: any
 	let region: string = 'uk'
 	let mkt: string = 'spreads'
 	const sport_key: string = props.match.params.key
@@ -24,31 +20,20 @@ export default function Odds(props: any) {
 		teams: null,
 		sites: null
 	})
+	const [oddData, setOddData] = useState<any>()
+	const [isLoading, setIsLoading] = useState(true)
 
 	useEffect(() => {
-		dispatch(fetchAll(initParam))
+		fetchAll(initParam)
+			.then((res: any) => {
+				setIsLoading(false)
+				setOddData(res)
+			})
+			.catch((error: any) => {
+				setIsLoading(false)
+				setOddData(error.response.data)
+			})
 	}, [])
-
-	if (oddData.length !== 0) {
-		content = oddData.data.map((odd: IoddAction) => (
-			<OddCard
-				key={odd.id}
-				id={odd.id}
-				sport_nice={odd.sport_nice}
-				teams={odd.teams}
-				home_team={odd.home_team}
-				commerce_time={odd.commence_time}
-				sites={odd.sites}
-				setModalData={() => {
-					setModalData({
-						teams: odd.teams,
-						sites: odd.sites
-					})
-					setModalShow(true)
-				}}
-				/>
-		))
-	}
 
 	return(
 		<div>
@@ -60,7 +45,34 @@ export default function Odds(props: any) {
 				<Breadcrumb.Item active>Odds</Breadcrumb.Item>
 			</Breadcrumb>
 			<Container>
-				{content}
+				{isLoading && (
+					<div className='align-center'>
+						<Spinner animation='border'>
+							<span className='sr-only'>Loading...</span>
+						</Spinner>
+					</div>
+				)}
+				{!isLoading && !oddData?.success && (
+					<div className='align-center'>{oddData?.msg}</div>
+				)}
+				{!isLoading && oddData?.data?.map((odd: IoddAction) => (
+					<OddCard
+						key={odd.id}
+						id={odd.id}
+						sport_nice={odd.sport_nice}
+						teams={odd.teams}
+						home_team={odd.home_team}
+						commerce_time={odd.commence_time}
+						sites={odd.sites}
+						setModalData={() => {
+							setModalData({
+								teams: odd.teams,
+								sites: odd.sites
+							})
+							setModalShow(true)
+						}}
+						/>
+				))}
 			</Container>
 			<OddModal
 				show={modalShow}

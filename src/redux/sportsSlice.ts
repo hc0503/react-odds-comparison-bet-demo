@@ -5,7 +5,7 @@ import envConfig from '../config/environments'
 
 const initialState: IsportDataAction = {
 	data: [],
-	loading: false
+	loading: true
 }
 
 export const fetchAll = createAsyncThunk(

@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Link, Switch, Route } from 'react-router-dom'
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap'
 
-import './App.css';
+import './App.css'
 import { routes } from '../../routes'
 import envConfig from '../../config/environments'
 
