@@ -1,14 +1,15 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { Router } from "react-router-dom";
 
 import {postLogin} from "../../services/authService"
 
 interface IUserState extends IState {
 	data: any[];
+	isLogin: boolean;
 }
 const initialState: IUserState = {
 	data: [],
 	loading: true,
+	isLogin: false,
 }
 export const login = createAsyncThunk(
 	"auth/loginStatus",
@@ -31,6 +32,7 @@ export const authSlice = createSlice({
 		builder.addCase(login.fulfilled, (state: any, action: any) => {
 			state.data = action.payload;
 			state.loading = false;
+			state.isLogin = true;
 			localStorage.setItem(
 				"accessToken",
 				action?.payload?.token?.accessToken?.token
@@ -40,7 +42,10 @@ export const authSlice = createSlice({
 		builder.addCase(logout.fulfilled, (state: any, action: any) => {
 			state.data = action.payload;
 			state.loading = false;
+			state.isLogin = false;
 			// 
 		})
 	}
-})
+});
+
+export default authSlice.reducer;
