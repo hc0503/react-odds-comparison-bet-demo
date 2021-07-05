@@ -1,12 +1,18 @@
-import HomePage from './pages/HomePage/HomePage'
-import SportsPage from './pages/SportsPage/SportsPage'
-import OddsPage from './pages/OddsPage/OddsPage'
+import HomePage from './pages/home/HomePage'
+import SportsPage from './pages/sports/SportsPage'
+import OddsPage from './pages/odds/OddsPage'
+import LoginPage from './pages/auth/LoginPage'
 
 export const routes = [
 	{
 		path: '/',
 		exact: true,
 		component: HomePage,
+	},
+	{
+		path: '/auth/login',
+		exact: true,
+		component: LoginPage,
 	},
 	{
 		path: '/home',

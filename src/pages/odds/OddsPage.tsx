@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { fetchAll } from '../../services/OddService'
 import OddCard from '../../components/Odds/OddCard'
 import OddModal from '../../components/Odds/OddModal'
+import NavBar from '../../components/common/navbar'
 
 export default function Odds(props: any) {
 	let region: string = 'uk'
@@ -36,7 +37,8 @@ export default function Odds(props: any) {
 	}, [])
 
 	return(
-		<div>
+		<>
+			<NavBar />
 			<Breadcrumb>
 				<Breadcrumb.Item linkAs={Link} linkProps={{ to: '/' }}>
 					Home
@@ -79,6 +81,6 @@ export default function Odds(props: any) {
 				setModalShow={() => setModalShow(false)}
 				data={modalData}
 				/>
-		</div>
+		</>
 	)
 }

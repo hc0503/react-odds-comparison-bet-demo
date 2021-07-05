@@ -5,12 +5,12 @@ import { Link } from 'react-router-dom'
 
 import { fetchAll } from '../../redux/sportsSlice'
 import SportCard from '../../components/Sports/SportCard'
-import '../../layouts/App/App.css'
+import NavBar from '../../components/common/navbar'
 
 export default function Sports() {
 	const dispatch = useDispatch()
 	const sportData = useSelector((state: any) => state.sports.data)
-	let content: any = (
+	let content: React.ReactNode = (
 		<div className='align-center'>
 			<Spinner animation='border'>
 				<span className='sr-only'>Loading...</span>
@@ -35,7 +35,8 @@ export default function Sports() {
 	}
 
 	return(
-		<div>
+		<>
+			<NavBar />
 			<Breadcrumb>
 				<Breadcrumb.Item linkAs={Link} linkProps={{ to: '/' }}>
 					Home
@@ -45,6 +46,6 @@ export default function Sports() {
 			<Container>
 				{content}
 			</Container>
-		</div>
+		</>
 	)
 }
