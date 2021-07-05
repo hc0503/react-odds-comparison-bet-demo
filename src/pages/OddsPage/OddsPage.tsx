@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { Breadcrumb, Container, Spinner, Alert } from 'react-bootstrap'
+import { useEffect, useState } from 'react'
+import { Breadcrumb, Container, Spinner } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
 import { fetchAll } from '../../services/OddService'

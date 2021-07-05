@@ -15,7 +15,7 @@ function App() {
         variant="dark"
         sticky="top"
         >
-        <Navbar.Brand href="/">{envConfig.appName}</Navbar.Brand>
+        <Navbar.Brand href="/"><img src="logo.png" height="40" /></Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
