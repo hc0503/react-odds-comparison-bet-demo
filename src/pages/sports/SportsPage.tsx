@@ -3,13 +3,13 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-import { fetchAll } from '../../redux/sportsSlice'
+import { fetchAll } from '../../redux/reducers/sportReducer'
 import SportCard from '../../components/Sports/SportCard'
 import NavBar from '../../components/common/navbar'
 
 export default function Sports() {
 	const dispatch = useDispatch()
-	const sportData = useSelector((state: any) => state.sports.data)
+	const sportData = useSelector((state: any) => state.sport.data)
 	let content: React.ReactNode = (
 		<div className='align-center'>
 			<Spinner animation='border'>
