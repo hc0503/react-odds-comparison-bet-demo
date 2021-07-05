@@ -11,6 +11,9 @@
 # production
 /build
 
+# vercel
+/.vercel
+
 # misc
 .DS_Store
 .env.local
