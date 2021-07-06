@@ -2,6 +2,7 @@ import HomePage from './pages/home/HomePage'
 import SportsPage from './pages/sports/SportsPage'
 import OddsPage from './pages/odds/OddsPage'
 import LoginPage from './pages/auth/LoginPage'
+import RegisterPage from './pages/auth/RegisterPage'
 
 export const routes = [
 	{
@@ -15,6 +16,12 @@ export const routes = [
 		exact: true,
 		private: false,
 		component: LoginPage,
+	},
+	{
+		path: '/auth/register',
+		exact: true,
+		private: false,
+		component: RegisterPage,
 	},
 	{
 		path: '/home',

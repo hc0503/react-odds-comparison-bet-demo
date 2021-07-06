@@ -1,9 +1,9 @@
 import { Card } from "react-bootstrap"
 import {useForm} from "react-hook-form"
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
-import { login } from "../../redux/reducers/authReducer";
+import { login as loginReducer } from "../../redux/reducers/authReducer";
 import "./auth.css"
 
 export default function LoginPage() {
@@ -11,7 +11,7 @@ export default function LoginPage() {
 	const {register, formState: {errors}, handleSubmit} = useForm();
 	const dispatch = useDispatch();
 	const handleLoginSubmit = handleSubmit((data: ICredentials) => {
-		dispatch(login(data));
+		dispatch(loginReducer(data));
 		history.push('/');
 	});
 	return (
@@ -48,9 +48,9 @@ export default function LoginPage() {
 						</div>
 					</div>
 
-					<button type="submit" className="btn btn-primary btn-block">Submit</button>
-					<div className="d-flex justify-content-center">
-						If you yet don't have account, go to&nbsp;<a href=""> Register</a>
+					<button type="submit" className="btn btn-primary btn-block">Login</button>
+					<div className="d-flex justify-content-center mt-2">
+						If you yet don't have account, go to&nbsp;<Link to="/auth/register"> Register</Link>
 					</div>
 				</form>
 			</Card>

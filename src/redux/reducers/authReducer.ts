@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-import {postLogin} from "../../services/authService"
+import {postLogin, postRegister} from "../../services/authService"
 
 interface IUserState extends IState {
 	data: any[];
@@ -18,6 +18,13 @@ export const login = createAsyncThunk(
 		return res.data;
 	}
 );
+export const register = createAsyncThunk(
+	"auth/registerStatus",
+	async (data: IUser) => {
+		const res = await postRegister(data);
+		return res.data;
+	}
+)
 export const logout = createAsyncThunk(
 	"auth/logoutStatus",
 	async () => {
@@ -29,6 +36,12 @@ export const authSlice = createSlice({
 	initialState,
 	reducers: {},
 	extraReducers: (builder) => {
+		builder.addCase(login.rejected, (state: any, action: any) => {
+			state.data = [];
+			state.loading = false;
+			state.isLogin = false;
+			localStorage.removeItem("accessToken");
+		});
 		builder.addCase(login.fulfilled, (state: any, action: any) => {
 			state.data = action.payload;
 			state.loading = false;
@@ -39,6 +52,21 @@ export const authSlice = createSlice({
 			);
 			// console.log('Result: ', action.payload?.token?.accessToken?.token)
 		});
+		builder.addCase(register.rejected, (state: any, action: any) => {
+			state.data = [];
+			state.loading = false;
+			state.isLogin = false;
+			localStorage.removeItem("accessToken");
+		})
+		builder.addCase(register.fulfilled, (state: any, action: any) => {
+			state.data = action.payload;
+			state.loading = false;
+			state.isLogin = true;
+			localStorage.setItem(
+				"accessToken",
+				action.payload?.token?.accessToken?.token
+			);
+		})
 		builder.addCase(logout.fulfilled, (state: any, action: any) => {
 			state.data = action.payload;
 			state.loading = false;
