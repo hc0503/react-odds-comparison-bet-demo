@@ -1,15 +1,18 @@
 import { Card } from "react-bootstrap"
 import {useForm} from "react-hook-form"
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import { login } from "../../redux/reducers/authReducer";
 import "./auth.css"
 
 export default function LoginPage() {
+	const history = useHistory();
 	const {register, formState: {errors}, handleSubmit} = useForm();
 	const dispatch = useDispatch();
 	const handleLoginSubmit = handleSubmit((data: ICredentials) => {
 		dispatch(login(data));
+		history.push('/');
 	});
 	return (
 		<div className="bg-dark d-flex justify-content-center h-screen">
