@@ -1,24 +1,46 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { Card } from "react-bootstrap"
 import { useForm } from "react-hook-form"
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, Link } from "react-router-dom";
 
-import { register as registerReducer } from "../../redux/reducers/authReducer";
+import { register as registerReducer, clearState, authSelector } from "../../redux/reducers/authReducer";
 import "./auth.css"
 
 export default function RegisterPage() {
 	const history = useHistory();
-	const {register, formState: {errors}, handleSubmit, watch} = useForm();
+	const {register, setError, formState: {errors}, handleSubmit, watch} = useForm();
 	const password = useRef({});
 	password.current = watch("password", "");
 	const dispatch = useDispatch();
 	const isLogin: boolean = useSelector((state: any) => state.auth.isLogin);
+	const { isSuccess, isError, errorMessage } = useSelector(
+		authSelector
+	 );
 	const handleRegisterSubmit = handleSubmit((data: IUser) => {
 		dispatch(registerReducer(data));
-		if (isLogin)
-			history.push('/');
 	});
+	useEffect(() => {
+		return () => {
+		  dispatch(clearState());
+		};
+	}, []);
+	useEffect(() => {
+		if (isSuccess) {
+			dispatch(clearState());
+			history.push('/');
+		}
+		if (isError) {
+			const errors = Object.keys(errorMessage);
+			errors.map((error: any) => {
+				setError(error, {
+					type: "manual",
+					message: errorMessage[error][0]
+				})
+			})
+			dispatch(clearState());
+		}
+	}, [isSuccess, isError]);
 	return (
 		<div className="bg-dark d-flex justify-content-center h-screen">
 			<Card body className="w-30 d-inline-block h-fit-content align-self-center">

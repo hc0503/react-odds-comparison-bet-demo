@@ -8,8 +8,11 @@ interface IUserState extends IState {
 }
 const initialState: IUserState = {
 	data: [],
-	loading: true,
+	isLoading: true,
 	isLogin: false,
+	isError: false,
+	isSuccess: false,
+	errorMessage: []
 }
 export const login = createAsyncThunk(
 	"auth/loginStatus",
@@ -20,9 +23,17 @@ export const login = createAsyncThunk(
 );
 export const register = createAsyncThunk(
 	"auth/registerStatus",
-	async (data: IUser) => {
-		const res = await postRegister(data);
-		return res.data;
+	async (data: IUser, thunkAPI) => {
+		try {
+			const res = await postRegister(data);
+			localStorage.setItem(
+				"accessToken",
+				res.data?.token?.accessToken?.token
+			);
+			return Promise.resolve(res.data);
+		} catch (error) {
+			return thunkAPI.rejectWithValue(error.response.data.errors);
+		}
 	}
 )
 export const logout = createAsyncThunk(
@@ -34,41 +45,49 @@ export const logout = createAsyncThunk(
 export const authSlice = createSlice({
 	name: "auth",
 	initialState,
-	reducers: {},
+	reducers: {
+		clearState: (state) => {
+			state.isError = false;
+			state.isSuccess = false;
+			state.isLogin = false;
+			state.isLoading = true;
+			state.errorMessage = [];
+			return state;
+		},
+	},
 	extraReducers: (builder) => {
-		builder.addCase(login.rejected, (state: any, action: any) => {
+		builder.addCase(login.rejected, (state: any, {payload}) => {
 			state.data = [];
 			state.loading = false;
 			state.isLogin = false;
 			localStorage.removeItem("accessToken");
 		});
-		builder.addCase(login.fulfilled, (state: any, action: any) => {
-			state.data = action.payload;
+		builder.addCase(login.fulfilled, (state: any, {payload}) => {
+			state.data = payload;
 			state.loading = false;
 			state.isLogin = true;
-			localStorage.setItem(
-				"accessToken",
-				action.payload?.token?.accessToken?.token
-			);
 			// console.log('Result: ', action.payload?.token?.accessToken?.token)
 		});
-		builder.addCase(register.rejected, (state: any, action: any) => {
+		builder.addCase(register.rejected, (state: any, {payload}) => {
 			state.data = [];
 			state.loading = false;
 			state.isLogin = false;
+			state.isError = true;
+			state.errorMessage = payload;
 			localStorage.removeItem("accessToken");
 		})
-		builder.addCase(register.fulfilled, (state: any, action: any) => {
-			state.data = action.payload;
+		builder.addCase(register.fulfilled, (state: any, {payload}) => {
+			state.data = payload;
 			state.loading = false;
 			state.isLogin = true;
+			state.isSuccess = true;
 			localStorage.setItem(
 				"accessToken",
-				action.payload?.token?.accessToken?.token
+				payload?.token?.accessToken?.token
 			);
 		})
-		builder.addCase(logout.fulfilled, (state: any, action: any) => {
-			state.data = action.payload;
+		builder.addCase(logout.fulfilled, (state: any, {payload}) => {
+			state.data = payload;
 			state.loading = false;
 			state.isLogin = false;
 			// 
@@ -77,3 +96,5 @@ export const authSlice = createSlice({
 });
 
 export default authSlice.reducer;
+export const { clearState } = authSlice.actions;
+export const authSelector = (state: any) => state.auth;
