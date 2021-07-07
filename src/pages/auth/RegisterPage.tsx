@@ -13,7 +13,6 @@ export default function RegisterPage() {
 	const password = useRef({});
 	password.current = watch("password", "");
 	const dispatch = useDispatch();
-	const isLogin: boolean = useSelector((state: any) => state.auth.isLogin);
 	const { isSuccess, isError, errorMessage } = useSelector(
 		authSelector
 	 );

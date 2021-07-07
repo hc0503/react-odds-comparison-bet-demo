@@ -4,21 +4,27 @@ import {postLogin, postRegister} from "../../services/authService"
 
 interface IUserState extends IState {
 	data: any[];
-	isLogin: boolean;
 }
 const initialState: IUserState = {
 	data: [],
 	isLoading: true,
-	isLogin: false,
 	isError: false,
 	isSuccess: false,
 	errorMessage: []
 }
 export const login = createAsyncThunk(
 	"auth/loginStatus",
-	async (credential: ICredentials) => {
-		const res = await postLogin(credential);
-		return res.data;
+	async (credential: ICredentials, thunkAPI) => {
+		try {
+			const res = await postLogin(credential);
+			localStorage.setItem(
+				"accessToken",
+				res.data?.token?.accessToken?.token
+			);
+			return Promise.resolve(res.data);
+		} catch (error) {
+			return thunkAPI.rejectWithValue(error.response.data.errors);
+		}
 	}
 );
 export const register = createAsyncThunk(
@@ -49,7 +55,6 @@ export const authSlice = createSlice({
 		clearState: (state) => {
 			state.isError = false;
 			state.isSuccess = false;
-			state.isLogin = false;
 			state.isLoading = true;
 			state.errorMessage = [];
 			return state;
@@ -59,19 +64,22 @@ export const authSlice = createSlice({
 		builder.addCase(login.rejected, (state: any, {payload}) => {
 			state.data = [];
 			state.loading = false;
-			state.isLogin = false;
+			state.isError = true;
+			state.errorMessage = payload;
 			localStorage.removeItem("accessToken");
 		});
 		builder.addCase(login.fulfilled, (state: any, {payload}) => {
 			state.data = payload;
 			state.loading = false;
-			state.isLogin = true;
-			// console.log('Result: ', action.payload?.token?.accessToken?.token)
+			state.isSuccess = true;
+			localStorage.setItem(
+				"accessToken",
+				payload?.token?.accessToken?.token
+			);
 		});
 		builder.addCase(register.rejected, (state: any, {payload}) => {
 			state.data = [];
 			state.loading = false;
-			state.isLogin = false;
 			state.isError = true;
 			state.errorMessage = payload;
 			localStorage.removeItem("accessToken");
@@ -79,7 +87,6 @@ export const authSlice = createSlice({
 		builder.addCase(register.fulfilled, (state: any, {payload}) => {
 			state.data = payload;
 			state.loading = false;
-			state.isLogin = true;
 			state.isSuccess = true;
 			localStorage.setItem(
 				"accessToken",
@@ -89,7 +96,6 @@ export const authSlice = createSlice({
 		builder.addCase(logout.fulfilled, (state: any, {payload}) => {
 			state.data = payload;
 			state.loading = false;
-			state.isLogin = false;
 			// 
 		})
 	}
