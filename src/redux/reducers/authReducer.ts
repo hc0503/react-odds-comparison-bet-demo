@@ -4,10 +4,12 @@ import {postLogin, postRegister} from "../../services/authService"
 
 interface IUserState extends IState {
 	data: any[];
+	isLogin: boolean;
 }
 const initialState: IUserState = {
 	data: [],
 	isLoading: true,
+	isLogin: false,
 	isError: false,
 	isSuccess: false,
 	errorMessage: []
@@ -55,7 +57,7 @@ export const authSlice = createSlice({
 		clearState: (state) => {
 			state.isError = false;
 			state.isSuccess = false;
-			state.isLoading = true;
+			state.isLoading = false;
 			state.errorMessage = [];
 			return state;
 		},
@@ -72,6 +74,7 @@ export const authSlice = createSlice({
 			state.data = payload;
 			state.loading = false;
 			state.isSuccess = true;
+			state.isLogin = true;
 			localStorage.setItem(
 				"accessToken",
 				payload?.token?.accessToken?.token
@@ -88,6 +91,7 @@ export const authSlice = createSlice({
 			state.data = payload;
 			state.loading = false;
 			state.isSuccess = true;
+			state.isLogin = true;
 			localStorage.setItem(
 				"accessToken",
 				payload?.token?.accessToken?.token
