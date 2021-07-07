@@ -3,5 +3,16 @@ interface ICredentials {
 	password: string;
 }
 interface IState {
-	loading: boolean
+	isLoading: boolean;
+	isSuccess: boolean;
+	isError: boolean;
+	errorMessage: any[];
+}
+interface IUser {
+	name: string;
+	email: string;
+	password: string;
+	password_confirmation?: string;
+	createdAt?: Date;
+	updatedAt?: Date;
 }

@@ -1,6 +1,8 @@
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
+import "./navbar.css"
+
 export default function NavBar() {
 	return (
 		<Navbar
@@ -18,11 +20,8 @@ export default function NavBar() {
             <Nav.Link as={Link} to="/sports">Sports</Nav.Link>
           </Nav>
           <Nav>
-          <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-            <NavDropdown.Item href="#">Profile</NavDropdown.Item>
-            <NavDropdown.Item href="#">Something</NavDropdown.Item>
-            <NavDropdown.Divider />
-            <NavDropdown.Item href="#">Logout</NavDropdown.Item>
+          <NavDropdown title={<img className="rounded-circle" src="/images/default-user.png" alt="User Avatar" height={30} />} id="collasible-nav-dropdown">
+            <NavDropdown.Item href="">Logout</NavDropdown.Item>
           </NavDropdown>
           </Nav>
         </Navbar.Collapse>
