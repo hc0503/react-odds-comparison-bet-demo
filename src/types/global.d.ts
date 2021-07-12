@@ -3,10 +3,11 @@ interface ICredentials {
 	password: string;
 }
 interface IState {
+	data: any;
 	isLoading: boolean;
 	isSuccess: boolean;
 	isError: boolean;
-	errorMessage: any[];
+	errorData: any;
 }
 interface IUser {
 	name: string;

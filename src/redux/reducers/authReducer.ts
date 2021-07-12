@@ -3,14 +3,15 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {postLogin, postRegister} from "../../services/authService"
 
 interface IUserState extends IState {
-	data: any[];
+	isLogin: boolean;
 }
 const initialState: IUserState = {
-	data: [],
+	data: {},
 	isLoading: true,
+	isLogin: false,
 	isError: false,
 	isSuccess: false,
-	errorMessage: []
+	errorData: {}
 }
 export const login = createAsyncThunk(
 	"auth/loginStatus",
@@ -55,23 +56,23 @@ export const authSlice = createSlice({
 		clearState: (state) => {
 			state.isError = false;
 			state.isSuccess = false;
-			state.isLoading = true;
-			state.errorMessage = [];
+			state.isLoading = false;
+			state.errorData = {};
 			return state;
 		},
 	},
 	extraReducers: (builder) => {
 		builder.addCase(login.rejected, (state: any, {payload}) => {
-			state.data = [];
-			state.loading = false;
+			state.data = {};
+			state.isLoading = false;
 			state.isError = true;
-			state.errorMessage = payload;
-			localStorage.removeItem("accessToken");
+			state.errorData = payload;
 		});
 		builder.addCase(login.fulfilled, (state: any, {payload}) => {
 			state.data = payload;
-			state.loading = false;
+			state.isLoading = false;
 			state.isSuccess = true;
+			state.isLogin = true;
 			localStorage.setItem(
 				"accessToken",
 				payload?.token?.accessToken?.token
@@ -79,15 +80,15 @@ export const authSlice = createSlice({
 		});
 		builder.addCase(register.rejected, (state: any, {payload}) => {
 			state.data = [];
-			state.loading = false;
+			state.isLoading = false;
 			state.isError = true;
-			state.errorMessage = payload;
-			localStorage.removeItem("accessToken");
+			state.errorData = payload;
 		})
 		builder.addCase(register.fulfilled, (state: any, {payload}) => {
 			state.data = payload;
-			state.loading = false;
+			state.isLoading = false;
 			state.isSuccess = true;
+			state.isLogin = true;
 			localStorage.setItem(
 				"accessToken",
 				payload?.token?.accessToken?.token
