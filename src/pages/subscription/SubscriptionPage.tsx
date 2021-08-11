@@ -1,8 +1,9 @@
-import { Breadcrumb, Container, Spinner } from 'react-bootstrap'
+import { Breadcrumb, Container } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
 import NavBar from '../../components/common/navbar'
 import PayPalBtn from '../../components/paypal/PayPalBtn'
+import PriceCard from '../../components/price/PriceCard'
 import env from '../../config/environments'
 
 export default function Subscription() {
@@ -11,7 +12,7 @@ export default function Subscription() {
 			'plan_id': env.paypalPlanId,
 		});
 	};
-	const paypalOnApprove = (data:any, actions: any) => {
+	const paypalOnApprove = (data: any, actions: any) => {
 		// call the backend api to store transaction details
 		console.log("Payapl approved")
 		console.log(data.subscriptionID)
@@ -42,12 +43,14 @@ export default function Subscription() {
 				<Breadcrumb.Item active>Subscritpion</Breadcrumb.Item>
 			</Breadcrumb>
 			<Container>
-				<PayPalBtn
-					createSubscription={paypalSubscribe}
-					onApprove={paypalOnApprove}
-					catchError={paypalOnError}
-					onError={paypalOnError}
-				/>
+				<PriceCard getStartedBtn={
+					<PayPalBtn
+						createSubscription={paypalSubscribe}
+						onApprove={paypalOnApprove}
+						catchError={paypalOnError}
+						onError={paypalOnError}
+					/>
+				}/>
 			</Container>
 		</>
 	)

@@ -2,16 +2,21 @@ import { PayPalButton } from "react-paypal-button-v2"
 
 import env from '../../config/environments'
 
-export default function PayPalBtn(props: any) {
-	const { createSubscription, onApprove, catchError, onError } = props
+interface IProps {
+	createSubscription: (data: any, actions: any) => any;
+	onApprove: (data: any, actions: any) => any;
+	onError: (err: any) => void;
+	catchError: (err: any) => void;
+}
+export default function PayPalBtn({createSubscription, onApprove, catchError, onError}: IProps) {
 	const paypalClientId = env.paypalClientId
 
 	return (
 		<PayPalButton
-			createSubscription={(data: any, details: any) => createSubscription(data, details)}
-			onApprove={(data: any, details: any) => onApprove(data, details)}
-			onError={(err: any) => onError(err)}
-			catchError={(err: any) => catchError(err)}
+			createSubscription={createSubscription}
+			onApprove={onApprove}
+			onError={onError}
+			catchError={catchError}
 			options={{ 
 				clientId: paypalClientId,
 				vault: true,
@@ -19,7 +24,6 @@ export default function PayPalBtn(props: any) {
 			style={{
 				color: "blue",
 				layout: "horizontal",
-				label: "subscribe"
 			}}
 		/>
 	)
