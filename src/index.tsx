@@ -6,7 +6,7 @@ import { persistStore } from "redux-persist"
 import store from './redux'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
-import App from "./layouts/App/App"
+import App from "./layouts/app/App"
 
 const rootElement = document.getElementById("root");
 const persistor = persistStore(store);
