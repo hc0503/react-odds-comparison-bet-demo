@@ -2,5 +2,8 @@
 Odds comparison in betting.
 ## How to run
 ```bash
-npm run start
+yarn install
+yarn start
+
+# http://localhost:3000
 ```
