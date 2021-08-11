@@ -3,6 +3,7 @@ import SportsPage from './pages/sports/SportsPage'
 import OddsPage from './pages/odds/OddsPage'
 import LoginPage from './pages/auth/LoginPage'
 import RegisterPage from './pages/auth/RegisterPage'
+import SubscriptionPage from './pages/subscription/SubscriptionPage'
 
 export const routes = [
 	{
@@ -40,5 +41,11 @@ export const routes = [
 		exact: true,
 		private: true,
 		component: OddsPage
-	}
+	},
+	{
+		path: '/subscription',
+		exact: true,
+		private: true,
+		component: SubscriptionPage,
+	},
 ]

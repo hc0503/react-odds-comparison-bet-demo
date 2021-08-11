@@ -3,8 +3,8 @@ import { Breadcrumb, Container, Spinner } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
 import { fetchAll } from '../../services/OddService'
-import OddCard from '../../components/Odds/OddCard'
-import OddModal from '../../components/Odds/OddModal'
+import OddCard from '../../components/odds/OddCard'
+import OddModal from '../../components/odds/OddModal'
 import NavBar from '../../components/common/navbar'
 
 export default function Odds(props: any) {
