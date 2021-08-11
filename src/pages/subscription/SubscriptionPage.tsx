@@ -2,7 +2,7 @@ import { Breadcrumb, Container, Spinner } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
 import NavBar from '../../components/common/navbar'
-import PayPalBtn from '../../components/Paypal/PayPalBtn'
+import PayPalBtn from '../../components/paypal/PayPalBtn'
 import env from '../../config/environments'
 
 export default function Subscription() {

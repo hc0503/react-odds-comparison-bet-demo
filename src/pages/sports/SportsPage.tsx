@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 import { fetchAll } from '../../redux/reducers/sportReducer'
-import SportCard from '../../components/Sports/SportCard'
+import SportCard from '../../components/sports/SportCard'
 import NavBar from '../../components/common/navbar'
 
 export default function Sports() {
