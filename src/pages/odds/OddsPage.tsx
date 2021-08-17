@@ -9,7 +9,7 @@ import NavBar from '../../components/common/navbar'
 
 export default function Odds(props: any) {
 	let region: string = 'uk'
-	let mkt: string = 'spreads'
+	let mkt: string = 'h2h'
 	const sport_key: string = props.match.params.key
 	const initParam: IoddParam = {
 		sport_key: sport_key,

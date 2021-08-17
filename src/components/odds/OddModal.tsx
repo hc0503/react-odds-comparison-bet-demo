@@ -2,27 +2,23 @@ import { Modal,
 	Button,
 	Form,
 	Col,
-	Row
 } from 'react-bootstrap'
+import OddCalc from './OddCalc';
 
 export default function OddModal(props: any) {
 	let body: any
 
 	if (props.data.sites !== null) {
 		body = props.data.sites.map((site: any) => (
-			<Form.Group as={Row} controlId={site.site_key} key={site.site_key}>
-				<Form.Label column sm={6}>
-					{site.site_nice}: {
-						site.odds.spreads.odds.map((odd: any) => (
-							odd + '\t'
-						))
-					}
-				</Form.Label>
-				<Col sm={6}>
-					<Form.Control type='' placeholder='' />
-				</Col>
-			</Form.Group>
-		))
+			<>
+				<Form.Group as={Col} className="mb-5">
+					<Form.Label className="font-weight-bold">{site.site_nice}</Form.Label>
+					{site.odds.h2h.map((value: number) => (
+						<OddCalc value={value} />
+					))}
+				</Form.Group>
+			</>
+		));
 	}
 	
 	return(
@@ -39,9 +35,7 @@ export default function OddModal(props: any) {
 				</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
-				<Form>
-					{body}
-				</Form>
+				{body}
 			</Modal.Body>
 			<Modal.Footer>
 				<Button onClick={props.setModalShow}>Close</Button>
